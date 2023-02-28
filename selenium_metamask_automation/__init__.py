@@ -23,18 +23,21 @@ def downloadMetamaskExtension():
     urllib.request.urlretrieve(url, os.getcwd() + '/extension_metamask.crx')
 
 
-def launchSeleniumWebdriver(driverPath):
+def launchSeleniumWebdriver(driverPath,browser_type):
     print('path', EXTENSION_PATH)
-    chrome_options = Options()
-    chrome_options.add_argument('blink-settings=imagesEnabled=false')
-    chrome_options.add_argument('--disable-images')
+    if browser_type == 'chrome':
+      options = Options()
+    elif browser_type == 'edge':
+      options = webdriver.EdgeOptions()
+    options.add_argument('blink-settings=imagesEnabled=false')
+    options.add_argument('--disable-images')
     # 屏蔽webdriver特征
-    chrome_options.add_argument("--disable-blink-features")
-    chrome_options.add_argument("--disable-blink-features=AutomationControlled")
+    options.add_argument("--disable-blink-features")
+    options.add_argument("--disable-blink-features=AutomationControlled")
     # -------------------------------------------------------
-    chrome_options.add_extension(EXTENSION_PATH)
+    options.add_extension(EXTENSION_PATH)
     global driver
-    driver = webdriver.Chrome(options=chrome_options,
+    driver = webdriver.Chrome(options=options,
                               executable_path=driverPath)
     # time.sleep(5)
     print("Extension has been loaded")

@@ -73,7 +73,7 @@ def get_user_agent():
 
 def game(recovery_phrase, password):
     driver_path = os.getcwd() + global_config.get('path', 'driver_path').strip()
-    driver = auto.launchSeleniumWebdriver(driver_path)
+    driver = auto.launchSeleniumWebdriver(driver_path,global_config.get("config",'browser_type'))
     # 打开game
     wait_time = global_config.get('config', 'time')
     driver.implicitly_wait(wait_time)
